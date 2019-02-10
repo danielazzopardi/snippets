@@ -1,0 +1,45 @@
+Forms Disabled Button
+
+//CSS
+
+button:disabled {
+    color: #8a8a8a !important;
+    cursor: not-allowed;
+    background-color: #e1e1e1;
+}
+
+//JS
+
+// Enable and Disable Submit button
+$('input').on('change', function(){
+    if($(this).val() == "") {
+        $(this).removeClass('filled');
+    } else {
+        if($(this).attr('type') != 'radio') {
+            $(this).addClass('filled');    
+        } else {
+            console.log('this is a radio button');
+            $(this).closest('.sq-form-question-answer ul').addClass('filled');
+        }
+    }
+    
+    var requiredFields = $('.sq-form-required-field').length,
+        filledRequiredFields = $('.sq-form-question-answer .filled').length,
+        filledFields = $('.filled').length;
+        console.log('Required fields = ' + requiredFields);
+        console.log('Required fields = ' + filledRequiredFields);
+        console.log('Filled fields = ' + filledFields);
+        
+    if(filledRequiredFields >= requiredFields) {
+        console.log('All fields filled');
+        $('.fieldset--submit button.button').removeAttr('disabled');
+    } else {
+        $('.fieldset--submit button.button').attr('disabled', 'disabled');
+    }
+});
+
+$('.fieldset--submit .button').on('click', function(e){
+    if($(this).is("[disabled")) {
+        e.preventDefault();
+    } 
+});
